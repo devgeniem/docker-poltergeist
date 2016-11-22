@@ -30,7 +30,8 @@ RUN  gem install \
         rspec-retry \
         poltergeist \
         capybara \
-        capybara-screenshot
+        capybara-screenshot \
+        sitemap-parser
 
 # This updates ca certs if user mounted any custom ones
 COPY entrypoint.sh /entrypoint.sh
