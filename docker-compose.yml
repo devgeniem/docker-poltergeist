@@ -1,0 +1,14 @@
+##
+# Example setup for gdev
+##
+test:
+  image: devgeniem/poltergeist
+  volumes:
+    # This mounts custom gdev ca certificate which the entrypoint script can read
+    - ${HOME}/.gdev/ca/ca.crt:/usr/local/share/ca-certificates/ca.crt:ro
+  environment:
+
+    WP_TEST_URL: https://wordpress.test
+
+  dns:
+    - 10.254.254.254
