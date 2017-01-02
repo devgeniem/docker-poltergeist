@@ -39,7 +39,10 @@ RUN  gem install \
         poltergeist \
         capybara \
         capybara-screenshot \
-        sitemap-parser
+        # Parse sitemaps
+        sitemap-parser \
+        # Check html with tidy
+        html_validation
 
 # This updates ca certs if user mounted any custom ones
 COPY entrypoint.sh /entrypoint.sh
