@@ -2,7 +2,9 @@ FROM ruby:2.3
 
 ARG PHANTOM_VERSION=2.1.1
 ARG DEBIAN_FRONTEND=noninteractive
-ENV TIDY_VERSION 5.2.0
+
+# Tidy doesn't create releases too often so just lock commit from git
+ARG TIDY_VERSION=fd0ccb2bbf3f907e5425d5849409fbf1558197bc
 
 ##
 # Install phantomjs and tidy-html5
@@ -16,12 +18,15 @@ RUN apt-get update -q \
     && tar xvjf phantomjs-${PHANTOM_VERSION}-linux-x86_64.tar.bz2 \
     && cp /tmp/phantomjs-*/bin/phantomjs /usr/local/bin/phantomjs \
 
-    && curl "https://codeload.github.com/htacg/tidy-html5/tar.gz/${TIDY_VERSION}" \
-        | tar -xz -C /tmp \
-    && cd "/tmp/tidy-html5-${TIDY_VERSION}/build/cmake" \
+    # Install tidy from source
+    && git clone https://github.com/htacg/tidy-html5 /tmp/tidy-html5 \
+    && cd /tmp/tidy-html5 \
+    && git checkout $TIDY_VERSION \
+    && cd build/cmake \
     && cmake ../.. -DCMAKE_BUILD_TYPE=Release \
     && make \
     && make install \
+    && tidy --version \
 
     # Cleanup
     && apt-get purge --auto-remove -y bzip2 cmake \

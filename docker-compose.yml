@@ -2,7 +2,8 @@
 # Example setup for gdev
 ##
 test:
-  image: devgeniem/poltergeist
+  #image: devgeniem/poltergeist
+  build: .
   volumes:
     # This mounts custom gdev ca certificate which the entrypoint script can read
     - ${HOME}/.gdev/ca/ca.crt:/usr/local/share/ca-certificates/ca.crt:ro
